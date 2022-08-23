@@ -70,8 +70,8 @@ const login = async () => {
   const userInfo = await loginByVerifyCode({
     mobile,
     verifyCode: code.value,
-    userId: localStorage.getItem('userId'),
-    externalUserId: localStorage.getItem('externalUserId')
+    userId: localStorage.getItem('userId')
+    // externalUserId: localStorage.getItem('externalUserId')
   })
   setStorage(userInfo)
   console.log(decodeURIComponent(route.query.redirect as string))

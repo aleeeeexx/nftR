@@ -3,6 +3,12 @@ import { Toast } from 'vant'
 import store from '@/store/index'
 import type { User } from '@/store/user'
 import type { ComponentInstance } from 'vant/lib/utils/basic'
+let BASE_URL
+if (process.env.NODE_ENV === 'development') {
+  BASE_URL = '/apis'
+} else {
+  BASE_URL = ''
+}
 // import { useRouter } from 'vue-router'
 interface ApiResult {
   code: number
@@ -11,7 +17,7 @@ interface ApiResult {
   //eslint-disable-next-line
   result?: any
 }
-
+axios.defaults.baseURL = BASE_URL
 const instance = axios.create({
   // 超时时间 1 分钟
   timeout: 30 * 1000,

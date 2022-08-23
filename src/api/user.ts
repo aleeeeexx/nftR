@@ -68,7 +68,7 @@ export const refreshToken = async (data: object) => {
 // 验证码登录
 export const loginByVerifyCode = async (data: object) => {
   const res = await request({
-    url: `${url.VUE_APP_DIANA_URL}/api/user/loginByVerifyCode`,
+    url: `${url.VUE_APP_LOGIN_URL}/user/register`,
     method: 'post',
     data
   })
