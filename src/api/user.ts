@@ -49,7 +49,7 @@ export const getUserInfoByToken = async (token: string, companyCode: string) => 
 // 通过手机获取验证码
 export const getVerifyCode = async (mobile: string) => {
   const res = await request({
-    url: `${url.VUE_APP_DIANA_URL}/api/user/getVerifyCode?mobile=${mobile}`,
+    url: `/getVerifyCode?mobile=${mobile}`,
     method: 'get'
   })
   return res
@@ -68,7 +68,7 @@ export const refreshToken = async (data: object) => {
 // 验证码登录
 export const loginByVerifyCode = async (data: object) => {
   const res = await request({
-    url: `${url.VUE_APP_LOGIN_URL}/user/register`,
+    url: '/user/register',
     method: 'post',
     data
   })

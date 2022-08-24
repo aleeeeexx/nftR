@@ -5,9 +5,9 @@ import type { User } from '@/store/user'
 import type { ComponentInstance } from 'vant/lib/utils/basic'
 let BASE_URL
 if (process.env.NODE_ENV === 'development') {
-  BASE_URL = '/apis'
+  BASE_URL = 'http://localhost:7001' //本地开发node后端地址
 } else {
-  BASE_URL = ''
+  BASE_URL = '' //后续生产地址
 }
 // import { useRouter } from 'vue-router'
 interface ApiResult {
@@ -22,7 +22,6 @@ const instance = axios.create({
   // 超时时间 1 分钟
   timeout: 30 * 1000,
   headers: {
-    'x-client': 'web',
     'Content-Type': 'application/json;charset=UTF-8'
   }
 })
