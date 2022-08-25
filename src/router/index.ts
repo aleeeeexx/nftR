@@ -11,6 +11,8 @@ const Login = () => import(/* webpackChunkName: "Login" */ '@/pages/login.vue')
 const Activity = () => import(/* webpackChunkName: "Activity" */ '@/pages/activity.vue')
 const getCoupon = () => import(/* webpackChunkName: "getCoupon" */ '@/pages/common/GetCoupon.vue')
 const mobileLogin = () => import(/* webpackChunkName: "mobileLogin" */ '@/pages/mobile-login.vue')
+const personal = () => import(/* webpackChunkName: "personal" */ '@/pages/personal/index.vue')
+
 // 1. 定义路由组件.
 // 也可以从其他文件导入
 const routes = [
@@ -34,6 +36,13 @@ const routes = [
     meta: {
       title: '万物云美居内购',
       isAuth: false
+    }
+  },
+  {
+    path: '/personal-center',
+    component: personal,
+    meta: {
+      title: '个人中心'
     }
   },
   {

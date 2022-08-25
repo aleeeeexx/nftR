@@ -1,14 +1,17 @@
 <template>
   <router-view v-slot="{ Component }" v-if="isRouterAlive">
-    <keep-alive>
+    <!-- <keep-alive>
       <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.fullPath" />
-    </keep-alive>
+    </keep-alive> -->
     <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.fullPath" />
+    <TabBar></TabBar>
   </router-view>
 </template>
 <script lang="ts" setup>
 import { ref, nextTick, provide } from 'vue'
 import { useRouter } from 'vue-router'
+
+import TabBar from '@/components/tabbar/index.vue'
 
 const router = useRouter()
 const isRouterAlive = ref(true)
