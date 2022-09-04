@@ -1,51 +1,36 @@
-# 最新的Dockerfile和docker-entrypoint.sh: https://git.vankeservice.com/renz-public/project-template/
-# deps stage
-FROM node:lts-alpine AS deps
+# FROM node:10-alpine
+# ADD . /app
+# WORKDIR /app
 
+# # Npm
+# RUN npm config set registry http://r.npm.taobao.org/ && \ 
+#     npm config set sass_binary_site http://npm.taobao.org/mirrors/node-sass/ && \
+#     npm i
+
+# # RUN npm run build
+# CMD ["npm", "run", "build"]
+# # Yarn
+# # RUN yarn config set registry https://registry.npm.taobao.org && \
+# #     yarn global add @tarojs/cli && \
+# #     yarn
+
+# # EXPOSE 3000
+# #执行构建
+# # CMD ["npm", "run", "start"]
+
+
+FROM node:10-alpine
+ADD . /app
 WORKDIR /app
 
-COPY package*.json .
-COPY yarn.lock .
+# Npm
+RUN npm config set registry http://r.npm.taobao.org/ && \ 
+    npm config set sass_binary_site http://npm.taobao.org/mirrors/node-sass/ && \
+    npm i
 
-RUN npm config set unsafe-perm true && npm config set registry https://npm.bu6.io && npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/ 
-RUN yarn 
-RUN yarn list
-# builder stage
-FROM deps AS builder
+RUN npm run build
 
-ARG ENV=test
-ARG LOG='发版的人很懒, 什么都没说'
-ARG VERSION=''
-ARG TIME=''
+FROM nginx
+COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=0 /app/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY . .
-RUN npm run build:$ENV
-
-# runtime stage
-FROM nginx:stable-alpine AS runtime
-
-RUN adduser -D -H -s "/bin/sh" -u 65532 nonroot
-
-ENV TZ=Asia/Shanghai \
-    WORKDIR=/usr/share/nginx/html
-
-WORKDIR ${WORKDIR}
-
-RUN set -ex \
-    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
-    && apk update --no-cache \
-    && apk add --no-cache ca-certificates tzdata su-exec curl bash \
-    && alias gosu="su-exec" \
-    && rm -rf /var/cache/apk/* \
-    && chown nonroot:nonroot ${WORKDIR}
-
-ENTRYPOINT ["./docker-entrypoint.sh"]
-
-EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
-
-COPY docker-entrypoint.sh .
-COPY default.conf /etc/nginx/conf.d/
-
-# 从builder stage拷贝编译后的文件， 检查目录
-COPY --chown=nonroot:nonroot --from=builder /app/dist .

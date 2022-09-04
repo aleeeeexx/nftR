@@ -8,7 +8,7 @@
         />
       </div>
       <div class="info">
-        <div class="name">收藏家0024</div>
+        <div class="name">收藏家{{ info.phone }}</div>
         <div class="id">id:{{ '12345' }}</div>
         <div class="hash">区块链地址:ghr10xhfzvVaymek4mjh</div>
       </div>
@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 // import { useRoute, useRouter } from 'vue-router'
-// import { getVerifyCode, loginByVerifyCode } from '@/api/user'
+import { getUsrInfo } from '@/api/user'
 // import { setStorage } from '@/utils/pulin-login'
 // import { Toast } from 'vant'
 
@@ -63,6 +63,13 @@ const onLoad = () => {
     }
   }, 1000)
 }
+const info = ref({})
+const getInfo = async () => {
+  const res = await getUsrInfo()
+  console.log(res, 'infooooo')
+  info.value = res.result
+}
+getInfo()
 </script>
 
 <style lang="scss" scoped>

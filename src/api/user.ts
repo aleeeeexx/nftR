@@ -74,3 +74,11 @@ export const loginByVerifyCode = async (data: object) => {
   })
   return res.result as TokenUserInfo
 }
+
+export const getUsrInfo = async () => {
+  const res = await request({
+    url: '/user/usrInfo',
+    method: 'get'
+  })
+  return res
+}

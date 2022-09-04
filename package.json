@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "build:prod": "vue-cli-service build --mode production",
+    "build": "vue-cli-service build --mode production",
     "build:test": "vue-cli-service build --mode test",
     "dev": "vue-cli-service serve",
-    "tsc": "vue-tsc --noEmit --skipLibCheck"
+    "tsc": "vue-tsc --noEmit --skipLibCheck",
+    "start": "cross-env NODE_ENV=production node server/index.js"
   },
   "dependencies": {
     "@types/nprogress": "^0.2.0",
@@ -56,3 +57,5 @@
     "vue-tsc": "^0.2.2"
   }
 }
+
+

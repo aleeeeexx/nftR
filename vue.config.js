@@ -10,7 +10,7 @@ module.exports = {
     },
     open: true
   },
-  publicPath: '/hasaki/',
+  // publicPath: '/hasaki/',
   chainWebpack: config => {
     // 移除 prefetch 插件
     config.plugins.delete('prefetch')
